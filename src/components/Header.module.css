@@ -1,0 +1,21 @@
+.header {
+    width: 100%;
+    padding: 8px 0;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    font-size: 18px;
+}
+
+.header>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+nav {
+
+    display: flex;
+
+    gap: 24px;
+}

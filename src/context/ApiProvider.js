@@ -1,66 +1,98 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useContext, createContext, useEffect, useState } from 'react';
+
 import ApiService from '../api/service';
 
 const ApiContext = createContext();
 
 export const ApiContextProvider = ({ children }) => {
   const [characters, setCharacters] = useState([]);
-  //   const [episodes, setEpisodes] = useState([]);
-  //   const [locations, setLocations] = useState([]);
+  const [episodes, setEpisodes] = useState([]);
+  const [locations, setLocations] = useState([]);
+
+  const [nextPage, setNextPage] = useState('');
+  const [previousPage, setPreviousPage] = useState('');
 
   const [page, setPage] = useState(1);
-  const [nextPage, setNextPage] = useState('');
 
   const getCharacters = async () => {
     const {
       data: { info, results },
     } = await ApiService.getCharacters(page);
-    console.log(info.next);
+
+    setPreviousPage(info.prev);
     setNextPage(info.next);
     setCharacters(results);
   };
 
-  //   const getLocations = async () => {
-  //     const {
-  //       data: { results },
-  //     } = await ApiService.getLocations();
+  const getEpisodes = async () => {
+    const {
+      data: { info, results },
+    } = await ApiService.getEpisodes(page);
 
-  //     setLocations(results);
-  //   };
+    setPreviousPage(info.prev);
+    setNextPage(info.next);
+    setEpisodes(results);
+  };
 
-  //   const getEpisodes = async () => {
-  //     const {
-  //       data: { results },
-  //     } = await ApiService.getEpisodes(page);
+  const getLocations = async () => {
+    const {
+      data: { info, results },
+    } = await ApiService.getLocations(page);
 
-  //     setEpisodes(results);
-  //   };
+    setPreviousPage(info.prev);
+    setNextPage(info.next);
+    setLocations(results);
+  };
 
   const getNextPage = async () => {
     const {
-      data: { info, results: nextResults },
+      data: { info, results },
     } = await ApiService.getNextPage(nextPage);
+
     setNextPage(info.next);
-    setCharacters([...characters, ...nextResults]);
+    setCharacters([...characters, ...results]);
   };
 
-  const searchCharacters = async (name, species, gender, status) => {
+  const searchEpisodes = async (name, status, species, gender) => {
     const {
       data: { info, results },
-    } = await ApiService.searchCharacters(name, species, gender, status);
+    } = await ApiService.searchCharacters(name, status, species, gender);
+
+    setPreviousPage(info.prev);
+    setNextPage(info.next);
+    setCharacters(results);
+  };
+
+  const searchCharacters = async (name, type, dimension) => {
+    const {
+      data: { info, results },
+    } = await ApiService.searchCharacters(name, type, dimension);
+
+    setPreviousPage(info.prev);
+    setNextPage(info.next);
+    setCharacters(results);
+  };
+
+  const searchLocations = async (name) => {
+    const {
+      data: { info, results },
+    } = await ApiService.searchCharacters(name);
+
+    setPreviousPage(info.prev);
     setNextPage(info.next);
     setCharacters(results);
   };
 
   useEffect(() => {
     getCharacters();
-    // getLocations();
-    // getEpisodes();
+    getLocations();
+    getEpisodes();
   }, []);
 
+  console.log(characters);
   return (
     <ApiContext.Provider
-      value={{ characters, nextPage, getNextPage, searchCharacters }}
+      value={{ characters, episodes, locations, getNextPage, searchCharacters }}
     >
       {children}
     </ApiContext.Provider>

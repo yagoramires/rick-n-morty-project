@@ -1,61 +1,23 @@
 import { useState } from 'react';
 import { useApiContext } from './context/ApiProvider';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Header from './components/Header';
+
+import Characters from './pages/Characters';
+import Locations from './pages/Locations';
+import Episodes from './pages/Episodes';
 
 function App() {
-  const { characters, nextPage, getNextPage, searchCharacters } =
-    useApiContext();
-
-  const [name, setName] = useState();
-  const [species, setSpecies] = useState('');
-  const [gender, setGender] = useState('');
-  const [status, setStatus] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    searchCharacters(name, species, gender, status);
-  };
-
-  console.log(characters);
-
   return (
     <div className='App'>
-      <button onClick={() => getNextPage(nextPage)}>Get More Results</button>
+      <Header />
 
-      <form onSubmit={handleSubmit}>
-        <p>Name</p>
-        <input
-          type='text'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <p>Species</p>
-        <input
-          type='text'
-          value={species}
-          onChange={(e) => setSpecies(e.target.value)}
-        />
-        <p>Gender</p>
-        <input
-          type='text'
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-        />
-        <p>Status</p>
-        <input
-          type='text'
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-        />
-
-        <input type='submit' value='filtrar' />
-      </form>
-
-      <div>
-        {characters?.map((character, index) => (
-          <p key={index}>{character.name}</p>
-        ))}
-      </div>
+      <Routes>
+        <Route path='/' element={<Navigate to='/characters' />} />
+        <Route path='/characters' element={<Characters />} />
+        <Route path='/locations' element={<Locations />} />
+        <Route path='/episodes' element={<Episodes />} />
+      </Routes>
     </div>
   );
 }
