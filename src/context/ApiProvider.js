@@ -5,82 +5,105 @@ import ApiService from '../api/service';
 const ApiContext = createContext();
 
 export const ApiContextProvider = ({ children }) => {
+  // STATES
   const [characters, setCharacters] = useState([]);
-  const [episodes, setEpisodes] = useState([]);
+  const [charactersPage, setCharactersPage] = useState('');
+
   const [locations, setLocations] = useState([]);
+  const [locationsPage, setLocationsPage] = useState('');
 
-  const [nextPage, setNextPage] = useState('');
-  const [previousPage, setPreviousPage] = useState('');
+  const [episodes, setEpisodes] = useState([]);
+  const [episodesPage, setEpisodesPage] = useState('');
 
-  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
+  // FUNÇÕES DE CARREGAR PERSONAGENS, EPISÓDIOS E LOCALIZAÇÕES
   const getCharacters = async () => {
     const {
       data: { info, results },
-    } = await ApiService.getCharacters(page);
+    } = await ApiService.getCharacters();
 
-    setPreviousPage(info.prev);
-    setNextPage(info.next);
+    setCharactersPage(info.next);
     setCharacters(results);
-  };
-
-  const getEpisodes = async () => {
-    const {
-      data: { info, results },
-    } = await ApiService.getEpisodes(page);
-
-    setPreviousPage(info.prev);
-    setNextPage(info.next);
-    setEpisodes(results);
   };
 
   const getLocations = async () => {
     const {
       data: { info, results },
-    } = await ApiService.getLocations(page);
+    } = await ApiService.getLocations();
 
-    setPreviousPage(info.prev);
-    setNextPage(info.next);
+    setLocationsPage(info.next);
     setLocations(results);
   };
 
-  const getNextPage = async () => {
+  const getEpisodes = async () => {
     const {
       data: { info, results },
-    } = await ApiService.getNextPage(nextPage);
+    } = await ApiService.getEpisodes();
 
-    setNextPage(info.next);
-    setCharacters([...characters, ...results]);
+    setEpisodesPage(info.next);
+    setEpisodes(results);
   };
 
-  const searchEpisodes = async (name, status, species, gender) => {
+  const searchCharacters = async (name, status, species, gender) => {
     const {
       data: { info, results },
     } = await ApiService.searchCharacters(name, status, species, gender);
 
-    setPreviousPage(info.prev);
-    setNextPage(info.next);
+    setCharactersPage(info.next);
     setCharacters(results);
   };
 
-  const searchCharacters = async (name, type, dimension) => {
+  const searchLocations = async (name, type, dimension) => {
     const {
       data: { info, results },
-    } = await ApiService.searchCharacters(name, type, dimension);
+    } = await ApiService.searchLocations(name, type, dimension);
 
-    setPreviousPage(info.prev);
-    setNextPage(info.next);
-    setCharacters(results);
+    setLocationsPage(info.next);
+    setLocations(results);
   };
 
-  const searchLocations = async (name) => {
+  const searchEpisodes = async (name) => {
     const {
       data: { info, results },
-    } = await ApiService.searchCharacters(name);
+    } = await ApiService.searchEpisodes(name);
 
-    setPreviousPage(info.prev);
-    setNextPage(info.next);
-    setCharacters(results);
+    setEpisodesPage(info.next);
+    setEpisodes(results);
+  };
+
+  const loadMore = async (type) => {
+    setLoading(true);
+    if (type === 'characters') {
+      const {
+        data: { info, results },
+      } = await ApiService.getNextPage(charactersPage);
+
+      setCharactersPage(info.next);
+      setCharacters([...characters, ...results]);
+      setLoading(false);
+      return;
+    }
+    // if (type === 'locations') {
+    //   const {
+    //     data: { info, results },
+    //   } = await ApiService.getNextPage(locationsPage);
+
+    //   setLocationsPage(info.next);
+    //   setLocations([...locations, ...results]);
+    // setLoading(false);
+    //   return;
+    // }
+    // if (type === 'episodes') {
+    //   const {
+    //     data: { info, results },
+    //   } = await ApiService.getNextPage(episodesPage);
+
+    //   setEpisodesPage(info.next);
+    //   setEpisodes([...episodes, ...results]);
+    // setLoading(false);
+    //   return;
+    // }
   };
 
   useEffect(() => {
@@ -89,10 +112,18 @@ export const ApiContextProvider = ({ children }) => {
     getEpisodes();
   }, []);
 
-  console.log(characters);
   return (
     <ApiContext.Provider
-      value={{ characters, episodes, locations, getNextPage, searchCharacters }}
+      value={{
+        characters,
+        episodes,
+        locations,
+        loadMore,
+        searchCharacters,
+        searchLocations,
+        searchEpisodes,
+        loading,
+      }}
     >
       {children}
     </ApiContext.Provider>

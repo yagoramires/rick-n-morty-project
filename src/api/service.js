@@ -4,13 +4,13 @@ const baseURL = (path) => `https://rickandmortyapi.com/api/${path}`;
 
 class ApiService {
   static getCharacters(page) {
-    return axios(baseURL(`character?page=${page}`));
+    return axios(baseURL(`character`));
   }
   static getEpisodes(page) {
-    return axios(baseURL(`episodes?page=${page}`));
+    return axios(baseURL(`episode`));
   }
   static getLocations(page) {
-    return axios(baseURL(`locations?page=${page}`));
+    return axios(baseURL(`location`));
   }
 
   static getNextPage(path) {
@@ -24,13 +24,13 @@ class ApiService {
       ),
     );
   }
-  static searchEpisodes(name = '', type = '', dimension = '') {
+  static searchLocations(name = '', type = '', dimension = '') {
     return axios(
-      baseURL(`character/?name=${name}&type=${type}&dimension=${dimension}`),
+      baseURL(`location/?name=${name}&type=${type}&dimension=${dimension}`),
     );
   }
-  static searchLocations(name = '') {
-    return axios(baseURL(`character/?name=${name}`));
+  static searchEpisodes(name = '') {
+    return axios(baseURL(`episode/?name=${name}`));
   }
 }
 
