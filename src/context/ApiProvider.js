@@ -75,6 +75,9 @@ export const ApiContextProvider = ({ children }) => {
   const loadMore = async (type) => {
     setLoading(true);
     if (type === 'characters') {
+      if (charactersPage === null) {
+        return;
+      }
       const {
         data: { info, results },
       } = await ApiService.getNextPage(charactersPage);
@@ -85,23 +88,29 @@ export const ApiContextProvider = ({ children }) => {
       return;
     }
     // if (type === 'locations') {
+    //   if (locationsPage === null) {
+    //     return;
+    //   }
     //   const {
     //     data: { info, results },
     //   } = await ApiService.getNextPage(locationsPage);
 
     //   setLocationsPage(info.next);
     //   setLocations([...locations, ...results]);
-    // setLoading(false);
+    //   setLoading(false);
     //   return;
     // }
     // if (type === 'episodes') {
+    //   if (episodesPage === null) {
+    //     return;
+    //   }
     //   const {
     //     data: { info, results },
     //   } = await ApiService.getNextPage(episodesPage);
 
     //   setEpisodesPage(info.next);
     //   setEpisodes([...episodes, ...results]);
-    // setLoading(false);
+    //   setLoading(false);
     //   return;
     // }
   };

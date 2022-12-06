@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../components/Card';
 import { BiSearch } from 'react-icons/bi';
 import { useApiContext } from '../context/ApiProvider';
@@ -21,6 +21,40 @@ const Characters = () => {
     searchCharacters(name, status, specie, gender);
   };
 
+  const speciesOptions = [
+    'Human',
+    'Alien',
+    'Humanoid',
+    'unknown',
+    'Poopybutthole',
+    'Mythological Creature',
+    'Animal',
+    'Robot',
+    'Cronenberg',
+    'Disease',
+  ];
+
+  const statusOptions = ['Alive', 'unknown', 'Dead'];
+  const genderOptions = ['Male', 'Female', 'unknown', 'Genderless'];
+
+  // const teste = () => {
+  //   const species = characters.map((char) => char.species);
+  //   const status = characters.map((char) => char.status);
+  //   const gender = characters.map((char) => char.gender);
+
+  //   const getAllSpecies = new Set(species);
+  //   const getAllStatus = new Set(status);
+  //   const getAllType = new Set(gender);
+
+  //   console.log([...getAllSpecies]);
+  //   console.log([...getAllStatus]);
+  //   console.log([...getAllType]);
+  // };
+
+  // useEffect(() => {
+  //   teste();
+  // }, [characters]);
+
   return (
     <div className={styles.charactersPage}>
       <div className={styles.imageContainer}>
@@ -37,7 +71,31 @@ const Characters = () => {
           onChange={(e) => setName(e.target.value)}
           className={styles.first}
         />
-        <input
+        <select onChange={(e) => setSpecie(e.target.value)} defaultValue={''}>
+          <option value=''>Species</option>
+          {speciesOptions.map((specie, index) => (
+            <option key={index} value={specie}>
+              {specie}
+            </option>
+          ))}
+        </select>
+        <select onChange={(e) => setGender(e.target.value)} defaultValue={''}>
+          <option value=''>Gender</option>
+          {genderOptions.map((gender, index) => (
+            <option key={index} value={gender}>
+              {gender}
+            </option>
+          ))}
+        </select>
+        <select onChange={(e) => setStatus(e.target.value)} defaultValue={''}>
+          <option value=''>Status</option>
+          {statusOptions.map((status, index) => (
+            <option key={index} value={status}>
+              {status}
+            </option>
+          ))}
+        </select>
+        {/* <input
           type='text'
           placeholder='Species'
           value={specie || ''}
@@ -48,13 +106,13 @@ const Characters = () => {
           placeholder='Gender'
           value={gender || ''}
           onChange={(e) => setGender(e.target.value)}
-        />
-        <input
+        /> */}
+        {/* <input
           type='text'
           placeholder='Status'
           value={status || ''}
           onChange={(e) => setStatus(e.target.value)}
-        />
+        /> */}
       </form>
 
       <div className={styles.cardContainer}>

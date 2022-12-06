@@ -22,12 +22,15 @@ form {
     gap: 1rem;
 }
 
-input {
+input,
+select {
     outline: none;
     padding: 1rem;
     border-radius: .5rem;
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.5);
     width: 25%;
+
 }
 
 .first {
@@ -42,7 +45,7 @@ button {
     background: transparent;
     top: 15px;
     left: 6px;
-    color: rgb(141, 141, 141);
+    color: rgba(0, 0, 0, 0.5);
     cursor: pointer;
 }
 
