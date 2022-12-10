@@ -8,6 +8,8 @@ import Header from './components/Header';
 import Characters from './pages/Characters';
 import Locations from './pages/Locations';
 import Episodes from './pages/Episodes';
+import CharDetails from './pages/CharDetails';
+import LocationsDetails from './pages/LocationsDetails';
 
 function App() {
   return (
@@ -16,7 +18,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Navigate to='/characters' />} />
         <Route path='/characters' element={<Characters />} />
+        <Route path='/characters/details/:id' element={<CharDetails />} />
         <Route path='/locations' element={<Locations />} />
+        <Route path='/locations/details/:id' element={<LocationsDetails />} />
         <Route path='/episodes' element={<Episodes />} />
       </Routes>
     </div>

@@ -32,6 +32,14 @@ class ApiService {
   static searchEpisodes(name = '') {
     return axios(baseURL(`episode/?name=${name}`));
   }
+
+  static searchChar(id) {
+    return axios(baseURL(`character/${id}`));
+  }
+
+  static searchLoc(id) {
+    return axios(baseURL(`location/${id}`));
+  }
 }
 
 export default ApiService;

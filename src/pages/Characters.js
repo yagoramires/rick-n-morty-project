@@ -7,6 +7,7 @@ import Loading from '../components/Loading';
 
 import Logo from '../assets/characters.png';
 import styles from './PageStyles.module.css';
+import { Link } from 'react-router-dom';
 
 const Characters = () => {
   const [name, setName] = useState('');
@@ -95,35 +96,18 @@ const Characters = () => {
             </option>
           ))}
         </select>
-        {/* <input
-          type='text'
-          placeholder='Species'
-          value={specie || ''}
-          onChange={(e) => setSpecie(e.target.value)}
-        />
-        <input
-          type='text'
-          placeholder='Gender'
-          value={gender || ''}
-          onChange={(e) => setGender(e.target.value)}
-        /> */}
-        {/* <input
-          type='text'
-          placeholder='Status'
-          value={status || ''}
-          onChange={(e) => setStatus(e.target.value)}
-        /> */}
       </form>
 
       <div className={styles.cardContainer}>
         {characters ? (
           characters.map((character) => (
-            <Card
-              key={character.id}
-              image={character.image}
-              name={character.name}
-              specie={character.species}
-            />
+            <Link key={character.id} to={`/characters/details/${character.id}`}>
+              <Card
+                image={character.image}
+                name={character.name}
+                specie={character.species}
+              />
+            </Link>
           ))
         ) : (
           <p>Nenhum personagem encontrado</p>

@@ -6,9 +6,11 @@ const ApiContext = createContext();
 
 export const ApiContextProvider = ({ children }) => {
   // STATES
+  const [character, setCharacter] = useState([]);
   const [characters, setCharacters] = useState([]);
   const [charactersPage, setCharactersPage] = useState('');
 
+  const [location, setLocation] = useState([]);
   const [locations, setLocations] = useState([]);
   const [locationsPage, setLocationsPage] = useState('');
 
@@ -72,6 +74,16 @@ export const ApiContextProvider = ({ children }) => {
     setEpisodes(results);
   };
 
+  const searchChar = async (id) => {
+    const { data } = await ApiService.searchChar(id);
+    setCharacter(data);
+  };
+
+  const searchLoc = async (id) => {
+    const { data } = await ApiService.searchLoc(id);
+    setLocation(data);
+  };
+
   const loadMore = async (type) => {
     setLoading(true);
     if (type === 'characters') {
@@ -87,32 +99,32 @@ export const ApiContextProvider = ({ children }) => {
       setLoading(false);
       return;
     }
-    // if (type === 'locations') {
-    //   if (locationsPage === null) {
-    //     return;
-    //   }
-    //   const {
-    //     data: { info, results },
-    //   } = await ApiService.getNextPage(locationsPage);
+    if (type === 'locations') {
+      if (locationsPage === null) {
+        return;
+      }
+      const {
+        data: { info, results },
+      } = await ApiService.getNextPage(locationsPage);
 
-    //   setLocationsPage(info.next);
-    //   setLocations([...locations, ...results]);
-    //   setLoading(false);
-    //   return;
-    // }
-    // if (type === 'episodes') {
-    //   if (episodesPage === null) {
-    //     return;
-    //   }
-    //   const {
-    //     data: { info, results },
-    //   } = await ApiService.getNextPage(episodesPage);
+      setLocationsPage(info.next);
+      setLocations([...locations, ...results]);
+      setLoading(false);
+      return;
+    }
+    if (type === 'episodes') {
+      if (episodesPage === null) {
+        return;
+      }
+      const {
+        data: { info, results },
+      } = await ApiService.getNextPage(episodesPage);
 
-    //   setEpisodesPage(info.next);
-    //   setEpisodes([...episodes, ...results]);
-    //   setLoading(false);
-    //   return;
-    // }
+      setEpisodesPage(info.next);
+      setEpisodes([...episodes, ...results]);
+      setLoading(false);
+      return;
+    }
   };
 
   useEffect(() => {
@@ -124,12 +136,16 @@ export const ApiContextProvider = ({ children }) => {
   return (
     <ApiContext.Provider
       value={{
+        character,
         characters,
         episodes,
+        location,
         locations,
         loadMore,
         searchCharacters,
+        searchChar,
         searchLocations,
+        searchLoc,
         searchEpisodes,
         loading,
       }}
