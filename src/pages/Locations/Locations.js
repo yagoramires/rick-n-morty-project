@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { BiSearch } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
-import LocationCard from '../components/LocationCard';
-import { useApiContext } from '../context/ApiProvider';
-import styles from './PageStyles.module.css';
+import { useApiContext } from '../../context/ApiProvider';
+
+import LocationCard from '../../components/LocationCard';
+
+import styles from './Styles.module.css';
+import { BiSearch } from 'react-icons/bi';
+import Image from '../../assets/locations.png';
+import Loading from '../../components/Loading';
 
 const Locations = () => {
-  const { locations, searchLocations, loadMore } = useApiContext();
+  const { locations, searchLocations, loadMore, loading } = useApiContext();
 
   const [name, setName] = useState('');
   const [type, setType] = useState('');
@@ -14,7 +18,6 @@ const Locations = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('click');
     searchLocations(name, type, dimension);
   };
 
@@ -103,8 +106,10 @@ const Locations = () => {
   ];
 
   return (
-    <div className={styles.charactersPage}>
-      <img src='' alt='' />
+    <section className={styles.sectionContainer}>
+      <div>
+        <img src={Image} alt='locations' className={styles.locationsImage} />
+      </div>
       <form onSubmit={handleSubmit}>
         <button type='submit'>
           <BiSearch size={25} />
@@ -144,7 +149,7 @@ const Locations = () => {
         </select>
       </form>
 
-      <div className={styles.cardContainer}>
+      <div className={styles.cardsContainer}>
         {locations &&
           locations.map((location) => (
             <Link key={location.id} to={`/locations/details/${location.id}`}>
@@ -153,10 +158,19 @@ const Locations = () => {
           ))}
       </div>
 
-      <span className={styles.loadMore} onClick={() => loadMore('locations')}>
-        LOAD MORE
-      </span>
-    </div>
+      <div className={styles.btnContainer}>
+        {loading ? (
+          <Loading />
+        ) : (
+          <span
+            className={styles.loadMore}
+            onClick={() => loadMore('locations')}
+          >
+            LOAD MORE
+          </span>
+        )}
+      </div>
+    </section>
   );
 };
 

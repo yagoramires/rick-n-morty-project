@@ -3,20 +3,11 @@ import axios from 'axios';
 const baseURL = (path) => `https://rickandmortyapi.com/api/${path}`;
 
 class ApiService {
+  // Get All Characters
   static getCharacters(page) {
     return axios(baseURL(`character`));
   }
-  static getEpisodes(page) {
-    return axios(baseURL(`episode`));
-  }
-  static getLocations(page) {
-    return axios(baseURL(`location`));
-  }
-
-  static getNextPage(path) {
-    return axios(path);
-  }
-
+  // Filter Characters
   static searchCharacters(name = '', status = '', species = '', gender = '') {
     return axios(
       baseURL(
@@ -24,21 +15,47 @@ class ApiService {
       ),
     );
   }
+  // Get Character Details
+  static getCharacterDetails(id) {
+    return axios(baseURL(`character/${id}`));
+  }
+
+  // Get All Locations
+  static getLocations(page) {
+    return axios(baseURL(`location`));
+  }
+  // Filter Locations
   static searchLocations(name = '', type = '', dimension = '') {
     return axios(
       baseURL(`location/?name=${name}&type=${type}&dimension=${dimension}`),
     );
   }
+  // Get Location Details
+  static getLocationDetails(id) {
+    return axios(baseURL(`location/${id}`));
+  }
+
+  // Get All Episodes
+  static getEpisodes(page) {
+    return axios(baseURL(`episode`));
+  }
+  // Filter Episodes
   static searchEpisodes(name = '') {
     return axios(baseURL(`episode/?name=${name}`));
   }
-
-  static searchChar(id) {
-    return axios(baseURL(`character/${id}`));
+  // Get Episode Details
+  static getEpisodeDetails(id) {
+    return axios(baseURL(`episode/${id}`));
   }
 
-  static searchLoc(id) {
-    return axios(baseURL(`location/${id}`));
+  // Load next page info for all contents
+  static getNextPage(path) {
+    return axios(path);
+  }
+
+  // Get details array info
+  static getDetailsInfo(url) {
+    return axios(url);
   }
 }
 

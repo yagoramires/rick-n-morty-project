@@ -6,20 +6,25 @@ const ApiContext = createContext();
 
 export const ApiContextProvider = ({ children }) => {
   // STATES
-  const [character, setCharacter] = useState([]);
   const [characters, setCharacters] = useState([]);
   const [charactersPage, setCharactersPage] = useState('');
+  const [characterDetails, setCharacterDetails] = useState([]);
+  const [characterEpisodes, setCharacterEpisodes] = useState([]);
 
-  const [location, setLocation] = useState([]);
   const [locations, setLocations] = useState([]);
   const [locationsPage, setLocationsPage] = useState('');
+  const [locationDetails, setLocationDetails] = useState([]);
+  const [locationResidents, setLocationResidents] = useState([]);
 
+  const [episodeDetails, setEpisodeDetails] = useState([]);
   const [episodes, setEpisodes] = useState([]);
   const [episodesPage, setEpisodesPage] = useState('');
 
   const [loading, setLoading] = useState(false);
 
-  // FUNÇÕES DE CARREGAR PERSONAGENS, EPISÓDIOS E LOCALIZAÇÕES
+  // Character functions
+
+  // Get all
   const getCharacters = async () => {
     const {
       data: { info, results },
@@ -29,24 +34,7 @@ export const ApiContextProvider = ({ children }) => {
     setCharacters(results);
   };
 
-  const getLocations = async () => {
-    const {
-      data: { info, results },
-    } = await ApiService.getLocations();
-
-    setLocationsPage(info.next);
-    setLocations(results);
-  };
-
-  const getEpisodes = async () => {
-    const {
-      data: { info, results },
-    } = await ApiService.getEpisodes();
-
-    setEpisodesPage(info.next);
-    setEpisodes(results);
-  };
-
+  // Filter
   const searchCharacters = async (name, status, species, gender) => {
     const {
       data: { info, results },
@@ -56,6 +44,25 @@ export const ApiContextProvider = ({ children }) => {
     setCharacters(results);
   };
 
+  // Get Details
+  const getCharacterDetails = async (id) => {
+    const { data } = await ApiService.getCharacterDetails(id);
+    setCharacterDetails(data);
+  };
+
+  // Location functions
+
+  // Get all
+  const getLocations = async () => {
+    const {
+      data: { info, results },
+    } = await ApiService.getLocations();
+
+    setLocationsPage(info.next);
+    setLocations(results);
+  };
+
+  // Filter
   const searchLocations = async (name, type, dimension) => {
     const {
       data: { info, results },
@@ -65,6 +72,25 @@ export const ApiContextProvider = ({ children }) => {
     setLocations(results);
   };
 
+  // Get Details
+  const getLocationDetails = async (id) => {
+    const { data } = await ApiService.getLocationDetails(id);
+    setLocationDetails(data);
+  };
+
+  // Episode functions
+
+  // Get all
+  const getEpisodes = async () => {
+    const {
+      data: { info, results },
+    } = await ApiService.getEpisodes();
+
+    setEpisodesPage(info.next);
+    setEpisodes(results);
+  };
+
+  // Filter
   const searchEpisodes = async (name) => {
     const {
       data: { info, results },
@@ -74,16 +100,13 @@ export const ApiContextProvider = ({ children }) => {
     setEpisodes(results);
   };
 
-  const searchChar = async (id) => {
-    const { data } = await ApiService.searchChar(id);
-    setCharacter(data);
+  //Get Details
+  const getEpisodeDetails = async (id) => {
+    const { data } = await ApiService.getEpisodeDetails(id);
+    setEpisodeDetails(data);
   };
 
-  const searchLoc = async (id) => {
-    const { data } = await ApiService.searchLoc(id);
-    setLocation(data);
-  };
-
+  // Load more items function
   const loadMore = async (type) => {
     setLoading(true);
     if (type === 'characters') {
@@ -127,6 +150,29 @@ export const ApiContextProvider = ({ children }) => {
     }
   };
 
+  // Fetch details data when user load details page
+  const fetchDetailsData = async (data, type) => {
+    let promises = [];
+    data.forEach((url) => promises.push(handleURL(url))); // para cada URL irá retornar um promise
+    const dataArray = await Promise.all(promises); // resolve todos os promises e coloca os objetos dentro de um array
+
+    if (type === 'characters') {
+      setCharacterEpisodes(dataArray); //passa todos os objetos para uma variável
+      return;
+    }
+
+    if (type === 'residents') {
+      setLocationResidents(dataArray); //passa todos os objetos para uma variável
+      return;
+    }
+  };
+
+  const handleURL = async (url) => {
+    const { data } = await ApiService.getDetailsInfo(url);
+    return data;
+  };
+
+  // Fetch data when app initializes
   useEffect(() => {
     getCharacters();
     getLocations();
@@ -136,18 +182,23 @@ export const ApiContextProvider = ({ children }) => {
   return (
     <ApiContext.Provider
       value={{
-        character,
         characters,
-        episodes,
-        location,
-        locations,
-        loadMore,
         searchCharacters,
-        searchChar,
-        searchLocations,
-        searchLoc,
+        characterDetails,
+        characterEpisodes,
+        getCharacterDetails,
+        episodes,
         searchEpisodes,
+        episodeDetails,
+        getEpisodeDetails,
+        locations,
+        searchLocations,
+        locationResidents,
+        locationDetails,
+        getLocationDetails,
+        loadMore,
         loading,
+        fetchDetailsData,
       }}
     >
       {children}

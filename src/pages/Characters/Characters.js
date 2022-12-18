@@ -1,26 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import Card from '../components/Card';
-import { BiSearch } from 'react-icons/bi';
-import { useApiContext } from '../context/ApiProvider';
-
-import Loading from '../components/Loading';
-
-import Logo from '../assets/characters.png';
-import styles from './PageStyles.module.css';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import { useApiContext } from '../../context/ApiProvider';
+
+import Logo from '../../assets/characters.png';
+import { BiSearch } from 'react-icons/bi';
+import styles from './Styles.module.css';
+
+import Loading from '../../components/Loading';
+import Card from '../../components/CharacterCard';
 
 const Characters = () => {
   const [name, setName] = useState('');
   const [specie, setSpecie] = useState('');
   const [gender, setGender] = useState('');
   const [status, setStatus] = useState('');
-
-  const { characters, searchCharacters, loadMore, loading } = useApiContext();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    searchCharacters(name, status, specie, gender);
-  };
 
   const speciesOptions = [
     'Human',
@@ -38,28 +32,17 @@ const Characters = () => {
   const statusOptions = ['Alive', 'unknown', 'Dead'];
   const genderOptions = ['Male', 'Female', 'unknown', 'Genderless'];
 
-  // const teste = () => {
-  //   const species = characters.map((char) => char.species);
-  //   const status = characters.map((char) => char.status);
-  //   const gender = characters.map((char) => char.gender);
+  const { characters, searchCharacters, loadMore, loading } = useApiContext();
 
-  //   const getAllSpecies = new Set(species);
-  //   const getAllStatus = new Set(status);
-  //   const getAllType = new Set(gender);
-
-  //   console.log([...getAllSpecies]);
-  //   console.log([...getAllStatus]);
-  //   console.log([...getAllType]);
-  // };
-
-  // useEffect(() => {
-  //   teste();
-  // }, [characters]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    searchCharacters(name, status, specie, gender);
+  };
 
   return (
-    <div className={styles.charactersPage}>
-      <div className={styles.imageContainer}>
-        <img src={Logo} alt='logo' className={styles.logo} />
+    <section className={styles.sectionContainer}>
+      <div>
+        <img src={Logo} alt='logo' />
       </div>
       <form onSubmit={handleSubmit}>
         <button type='submit'>
@@ -70,7 +53,6 @@ const Characters = () => {
           placeholder='Filter by name'
           value={name || ''}
           onChange={(e) => setName(e.target.value)}
-          className={styles.first}
         />
         <select onChange={(e) => setSpecie(e.target.value)} defaultValue={''}>
           <option value=''>Species</option>
@@ -98,7 +80,7 @@ const Characters = () => {
         </select>
       </form>
 
-      <div className={styles.cardContainer}>
+      <div className={styles.cardsContainer}>
         {characters ? (
           characters.map((character) => (
             <Link key={character.id} to={`/characters/details/${character.id}`}>
@@ -126,7 +108,7 @@ const Characters = () => {
           </span>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

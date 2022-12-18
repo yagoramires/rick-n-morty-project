@@ -1,4 +1,4 @@
-.locationCard {
+.episodeCard {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,11 +14,11 @@
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
 }
 
-.locationCard:hover {
-    box-shadow: 0px 3px 5px rgba(0, 255, 34, 0.2), 0px 1px 18px rgba(0, 255, 34, 0.2), 0px 6px 10px rgba(0, 255, 34, 0.2);
+.episodeCard:hover {
+    box-shadow: 0px 3px 5px rgba(255, 238, 0, 0.2), 0px 1px 18px rgba(255, 238, 0, 0.2), 0px 6px 10px rgba(255, 238, 0, 0.2);
 }
 
-.locationCard h3 {
+.episodeCard h1 {
     width: 100%;
     text-align: center;
     font-weight: 500;
@@ -27,12 +27,20 @@
     color: rgba(0, 0, 0, 0.87);
 }
 
-.locationCard p {
+.episodeCard p:nth-of-type(1) {
     font-weight: 400;
     font-size: 14px;
     line-height: 21px;
     text-align: center;
     letter-spacing: 0.25px;
     color: rgba(0, 0, 0, 0.6);
+}
 
+.episodeCard p:nth-of-type(2) {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 21px;
+    text-align: center;
+    letter-spacing: 0.25px;
+    color: rgba(0, 0, 0, 0.6);
 }
