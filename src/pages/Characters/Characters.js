@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useApiContext } from '../../context/ApiProvider';
@@ -32,7 +32,14 @@ const Characters = () => {
   const statusOptions = ['Alive', 'unknown', 'Dead'];
   const genderOptions = ['Male', 'Female', 'unknown', 'Genderless'];
 
-  const { characters, searchCharacters, loadMore, loading } = useApiContext();
+  const {getCharacters, characters, searchCharacters, loadMore, loading } = useApiContext();
+
+  // Fetch data when page is loaded
+  useEffect(() => {
+    getCharacters();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

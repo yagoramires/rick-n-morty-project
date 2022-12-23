@@ -174,14 +174,17 @@ export const ApiContextProvider = ({ children }) => {
 
   // Fetch data when app initializes
   useEffect(() => {
-    getCharacters();
-    getLocations();
-    getEpisodes();
+    // getCharacters();
+    // getLocations();
+    // getEpisodes();
   }, []);
 
   return (
     <ApiContext.Provider
       value={{
+        getCharacters,
+        getLocations,
+        getEpisodes,
         characters,
         searchCharacters,
         characterDetails,

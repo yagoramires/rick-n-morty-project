@@ -8,9 +8,10 @@ import styles from './Styles.module.css';
 import { BiSearch } from 'react-icons/bi';
 import Image from '../../assets/locations.png';
 import Loading from '../../components/Loading';
+import { useEffect } from 'react';
 
 const Locations = () => {
-  const { locations, searchLocations, loadMore, loading } = useApiContext();
+  const { getLocations,locations, searchLocations, loadMore, loading } = useApiContext();
 
   const [name, setName] = useState('');
   const [type, setType] = useState('');
@@ -104,6 +105,12 @@ const Locations = () => {
     'Magic Dimension',
     'Merged Dimension',
   ];
+
+      // Fetch data when page is loaded
+      useEffect(() => {
+        getLocations();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
 
   return (
     <section className={styles.sectionContainer}>
