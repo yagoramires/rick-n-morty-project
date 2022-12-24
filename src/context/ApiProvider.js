@@ -19,6 +19,7 @@ export const ApiContextProvider = ({ children }) => {
   const [episodeDetails, setEpisodeDetails] = useState([]);
   const [episodes, setEpisodes] = useState([]);
   const [episodesPage, setEpisodesPage] = useState('');
+  const [episodeCharacters, setEpisodeCharacters] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -156,13 +157,18 @@ export const ApiContextProvider = ({ children }) => {
     data.forEach((url) => promises.push(handleURL(url))); // para cada URL irá retornar um promise
     const dataArray = await Promise.all(promises); // resolve todos os promises e coloca os objetos dentro de um array
 
-    if (type === 'characters') {
+    if (type === 'episodes') {
       setCharacterEpisodes(dataArray); //passa todos os objetos para uma variável
       return;
     }
 
     if (type === 'residents') {
       setLocationResidents(dataArray); //passa todos os objetos para uma variável
+      return;
+    }
+
+    if (type === 'characters') {
+      setEpisodeCharacters(dataArray); //passa todos os objetos para uma variável
       return;
     }
   };
@@ -193,6 +199,7 @@ export const ApiContextProvider = ({ children }) => {
         episodes,
         searchEpisodes,
         episodeDetails,
+        episodeCharacters,
         getEpisodeDetails,
         locations,
         searchLocations,

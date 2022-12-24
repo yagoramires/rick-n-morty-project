@@ -1,53 +1,39 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 import { useApiContext } from '../../context/ApiProvider';
 
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import styles from './Styles.module.css';
-// import Card from '../../components/CharacterCard';
+import Card from '../../components/CharacterCard';
 
 const EpisodeDetails = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
 
-  const { getEpisodeDetails, episodeDetails } = useApiContext();
+  const {
+    getEpisodeDetails,
+    episodeDetails,
+    episodeCharacters,
+    fetchDetailsData,
+  } = useApiContext();
 
   useEffect(() => {
     getEpisodeDetails(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(episodeDetails);
+  useEffect(() => {
+    if (episodeDetails.characters) {
+      fetchDetailsData(episodeDetails.characters, 'characters');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [episodeDetails]);
+
+  console.log(episodeCharacters);
 
   return (
-    // <section className={styles.sectionContainer}>
-    //   <span onClick={() => navigate(-1)} className={styles.backContainer}>
-    //     <AiOutlineArrowLeft size={20} /> GO BACK
-    //   </span>
-
-    //   {episodeDetails && (
-    //     <div>
-    //       <h1>{episodeDetails.name}</h1>
-    //       <div>
-    //         <div>
-    //           <h2>Episode</h2>
-    //           <p>{episodeDetails.episode}</p>
-    //         </div>
-    //         <div>
-    //           <h2>Date</h2>
-    //           <p>{episodeDetails.created}</p>
-    //         </div>
-
-    //         <div>
-    //           <h2>Cast</h2>
-    //           <div>cards</div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   )}
-    // </section>
     <section className={styles.sectionContainer}>
       <div>
         <div className={styles.infoContainer}>
@@ -71,7 +57,7 @@ const EpisodeDetails = () => {
       <div className={styles.castContainer}>
         <h2>Cast</h2>
         <div>
-          {/* {episodeDetails?.map((resident) => (
+          {episodeCharacters?.map((resident) => (
             <Link key={resident.id} to={`/characters/details/${resident.id}`}>
               <Card
                 image={resident.image}
@@ -79,7 +65,7 @@ const EpisodeDetails = () => {
                 specie={resident.species}
               />
             </Link>
-          ))} */}
+          ))}
         </div>
       </div>
     </section>

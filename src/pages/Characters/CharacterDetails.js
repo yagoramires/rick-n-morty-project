@@ -27,7 +27,7 @@ const CharDetails = () => {
 
   useEffect(() => {
     if (characterDetails.episode) {
-      fetchDetailsData(characterDetails.episode, 'characters');
+      fetchDetailsData(characterDetails.episode, 'episodes');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [characterDetails]);
