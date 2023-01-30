@@ -7,8 +7,8 @@ const Card = ({ image, name, specie }) => {
       <img src={image} alt={name} className={styles.image} />
 
       <div className={styles.textContainer}>
-        <h3 className={styles.name}>{name}</h3>
-        <p className={styles.specie}>{specie}</p>
+        <span className={styles.name}>{name}</span>
+        <span className={styles.specie}>{specie}</span>
       </div>
     </div>
   );
