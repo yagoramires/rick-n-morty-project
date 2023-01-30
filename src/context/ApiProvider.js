@@ -178,12 +178,12 @@ export const ApiContextProvider = ({ children }) => {
     return data;
   };
 
-  // Fetch data when app initializes
-  useEffect(() => {
-    // getCharacters();
-    // getLocations();
-    // getEpisodes();
-  }, []);
+  // // Fetch data when app initializes
+  // useEffect(() => {
+  //   getCharacters();
+  //   getLocations();
+  //   getEpisodes();
+  // }, []);
 
   return (
     <ApiContext.Provider

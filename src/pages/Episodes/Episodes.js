@@ -11,7 +11,8 @@ import EpisodesCard from '../../components/EpisodesCard';
 import { useEffect } from 'react';
 
 const Episodes = () => {
-  const {getEpisodes, episodes, loadMore, loading, searchEpisodes } = useApiContext();
+  const { getEpisodes, episodes, loadMore, loading, searchEpisodes } =
+    useApiContext();
 
   const [search, setSearch] = useState('');
 
@@ -25,16 +26,15 @@ const Episodes = () => {
     return;
   };
 
-    // Fetch data when page is loaded
-    useEffect(() => {
-      getEpisodes();
+  // Fetch data when page is loaded
+  useEffect(() => {
+    getEpisodes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-  
+  }, []);
 
   return (
     <section className={styles.sectionContainer}>
-      <div>
+      <div className={styles.logoContainer}>
         <img src={Image} alt='episodes' className={styles.episodesImage} />
       </div>
 
