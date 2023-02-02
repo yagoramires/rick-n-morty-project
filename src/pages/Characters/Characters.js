@@ -35,11 +35,11 @@ const Characters = () => {
   const { getCharacters, characters, searchCharacters, loadMore, loading } =
     useApiContext();
 
-  // Fetch data when page is loaded
-  useEffect(() => {
-    getCharacters();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // // Fetch data when page is loaded
+  // useEffect(() => {
+  //   getCharacters();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

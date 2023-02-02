@@ -26,11 +26,11 @@ const Episodes = () => {
     return;
   };
 
-  // Fetch data when page is loaded
-  useEffect(() => {
-    getEpisodes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // // Fetch data when page is loaded
+  // useEffect(() => {
+  //   getEpisodes();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <section className={styles.sectionContainer}>

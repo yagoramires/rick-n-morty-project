@@ -107,11 +107,11 @@ const Locations = () => {
     'Merged Dimension',
   ];
 
-  // Fetch data when page is loaded
-  useEffect(() => {
-    getLocations();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // // Fetch data when page is loaded
+  // useEffect(() => {
+  //   getLocations();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <section className={styles.sectionContainer}>

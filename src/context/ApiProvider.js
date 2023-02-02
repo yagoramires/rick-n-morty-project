@@ -1,4 +1,4 @@
-import { useContext, createContext, useState } from 'react';
+import { useContext, createContext, useState, useEffect } from 'react';
 
 import ApiService from '../api/service';
 
@@ -178,12 +178,12 @@ export const ApiContextProvider = ({ children }) => {
     return data;
   };
 
-  // // Fetch data when app initializes
-  // useEffect(() => {
-  //   getCharacters();
-  //   getLocations();
-  //   getEpisodes();
-  // }, []);
+  // Fetch data when app initializes
+  useEffect(() => {
+    getCharacters();
+    getLocations();
+    getEpisodes();
+  }, []);
 
   return (
     <ApiContext.Provider
