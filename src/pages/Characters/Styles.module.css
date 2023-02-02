@@ -9,6 +9,14 @@
     gap: 2rem;
 }
 
+.charContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .logoContainer {
     display: flex;
     justify-content: center;

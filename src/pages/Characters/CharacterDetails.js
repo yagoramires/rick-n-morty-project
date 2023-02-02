@@ -92,7 +92,7 @@ const CharDetails = () => {
           <AiOutlineArrowLeft size={20} />
           GO BACK
         </span>
-        <div>
+        <div className={styles.charContainer}>
           <img
             src={characterDetails?.image}
             alt={characterDetails?.name}
