@@ -33,7 +33,7 @@ const LocationsDetails = () => {
 
   return (
     <section className={styles.sectionContainer}>
-      <div>
+      <div className={styles.locationContainer}>
         <div className={styles.infoContainer}>
           <span onClick={() => navigate(-1)} className={styles.backContainer}>
             <AiOutlineArrowLeft size={20} /> GO BACK

@@ -124,31 +124,36 @@ const CharDetails = () => {
             <p>Type</p>
             <p>{characterDetails?.type || 'Unknown'}</p>
           </div>
-          <div className={styles.locationContainer}>
-            <Link
-              to={`/locations/details/${characterDetails?.location?.url.replace(
-                'https://rickandmortyapi.com/api/location/',
-                '',
-              )}`}
-            >
+          <Link
+            to={`/locations/details/${characterDetails?.location?.url.replace(
+              'https://rickandmortyapi.com/api/location/',
+              '',
+            )}`}
+            className={styles.locationContainer}
+          >
+            <div>
               <p>Location</p>
               <p>{characterDetails.location?.name}</p>
-            </Link>
+            </div>
             <IoIosArrowForward />
-          </div>
+          </Link>
         </div>
         <div className={styles.episodesContainer}>
           <h2>Episodes</h2>
           <div className={styles.episodesList}>
             {characterEpisodes?.map((episode) => (
-              <div key={episode.id} className={styles.episodeLink}>
-                <Link to={`/episodes/details/${episode.id}`}>
+              <Link
+                to={`/episodes/details/${episode.id}`}
+                key={episode.id}
+                className={styles.episodeLink}
+              >
+                <div to={`/episodes/details/${episode.id}`}>
                   <p>{episode.episode}</p>
                   <p>{episode.name}</p>
                   <p>{convertDate(episode.created)}</p>
-                </Link>
+                </div>
                 <IoIosArrowForward />
-              </div>
+              </Link>
             ))}
           </div>
         </div>
