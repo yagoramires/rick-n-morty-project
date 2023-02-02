@@ -7,11 +7,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 2rem;
-}
-
-
-.locationContainer {
-    width: 100%;
+    position: relative;
 }
 
 .logoContainer {
@@ -123,7 +119,7 @@
 .backContainer {
     position: absolute;
     left: 0;
-    top: 0;
+    top: -1.5rem;
 
     display: flex;
     justify-content: center;
